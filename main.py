@@ -18,13 +18,18 @@ def groupNum(equation):
             operators += 1
     equationSimplified = []
     term = []
-    for i in range(len(equation) - 1):
+    for i in range(len(equation)):
         if equation[i] not in operations:
-            term.append(equation[index])
-            print(term)
-        num = float("".join(term))
-        print(num)
-        equationSimplified.append(num)
+            term.append(equation[i])
+        elif equation[i] in operations:
+            num = float("".join(term))
+            equationSimplified.extend([num, equation[i]])
+            term.clear()
+        else:
+            return("Error: invalid character")
+        if i == len(equation) - 1:
+            num = float("".join(term))
+            equationSimplified.append(num)
     return equationSimplified
 equation = input("Enter what you want to solve: ")
 equation = simplify(equation)
