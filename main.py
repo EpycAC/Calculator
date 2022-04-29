@@ -34,7 +34,12 @@ def groupNum(equ):
     return equationSimplified
 
 def solve(equation):
-    terms = groupNum(equation)
+    " ".join(equation)
+    print(equation)
+    equation.split()
+    print(equation)
+    terms = equation.append("X")
+    print(terms)
     moperator = []
     aoperator = []
     for i in range(len(terms)):
@@ -54,11 +59,13 @@ def solve(equation):
         else:
             newvalue = terms[oindex - 1] / terms[oindex + 1]
             print(newvalue)
-    
+        terms = terms[:(oindex - 1)] + [newvalue] + terms[oindex + 2:]
+        print(terms)
+
         moperator.remove(operator)
     return 0
 
-equation = input("Enter what you want to solve: ")
+equation = groupNum(input("Enter what you want to solve: "))
 '''
 if equation.lower() == "history" or "h":
     adjustedHistory = history.reverse()
