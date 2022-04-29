@@ -3,7 +3,6 @@ import toml
 import json
 settings = toml.load("settings.toml")
 operations = ["+", "-", "/", "*"]
-print(settings)
 
 def flip(num):
     return 1 / num
@@ -46,7 +45,7 @@ def groupNum(equ):
     updateHistory(equationSimplified)
     return equationSimplified
 
-def solve(equation, his):
+def solve(equation):
     terms = equation
     terms.append("X")
     moperator = []
@@ -97,8 +96,11 @@ while True:
         history = history["history"]
         for i in range(min(len(history), settings["History"]["length"])):
             prev = history[i]
-            "".join(prev)
-            print(prev)
+            temp = []
+            for i in range(len(prev)):
+                temp.append(str(prev[i]))
+            temp = "".join(temp)
+            print(temp)
             print(solve(prev))
             print("")
     else:
