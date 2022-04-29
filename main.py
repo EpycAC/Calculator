@@ -1,5 +1,7 @@
 import math
+import toml
 history = []
+settings = toml.load("settings.toml")
 operations = ["+", "-", "/", "*"]
 
 def flip(num):
@@ -12,10 +14,6 @@ def simplify(equation):
     return c
 
 def groupNum(equation):
-    operators = 0
-    for i in range(len(equation)):
-        if equation[i] in operations:
-            operators += 1
     equationSimplified = []
     term = []
     for i in range(len(equation)):
@@ -34,15 +32,16 @@ def groupNum(equation):
     return equationSimplified
 
 def solve(equation):
-    
+    pass
 
 equation = input("Enter what you want to solve: ")
 if equation.lower() == "history" or "h":
     adjustedHistory = history.reverse()
-    for i in range(10):
+    for i in range(min(len(history), 10)):
         if i <= len(history):
             prev = adjustedHistory[i]
             "".join(prev)
             print(prev)
-equation = simplify(equation)
-print(groupNum(equation))
+else:
+    equation = simplify(equation)
+    print(groupNum(equation))
