@@ -1,6 +1,6 @@
 import math
 import toml
-history = []
+import json
 settings = toml.load("settings.toml")
 operations = ["+", "-", "/", "*"]
 print(settings)
@@ -13,6 +13,19 @@ def simplify(equation):
     b = "".join(a)
     c = list(b)
     return c
+
+def updateHistory(item):
+    history = open("history.json", "r")
+    try:
+        history = json.load(history)
+    except:
+        history = {
+        "history": []
+        }
+    hFile = open("history.json", "w")
+    hisTemp = [item] + history["history"]
+    history["history"] = hisTemp
+    hFile.write(json.dumps(history, indent=4))
 
 def groupNum(equ):
     equation = simplify(equ)
@@ -30,10 +43,10 @@ def groupNum(equ):
         if i == len(equation) - 1:
             num = float("".join(term))
             equationSimplified.append(num)
-    history.append(equationSimplified)
+    updateHistory(equationSimplified)
     return equationSimplified
 
-def solve(equation):
+def solve(equation, his):
     terms = equation
     terms.append("X")
     moperator = []
@@ -66,22 +79,28 @@ def solve(equation):
         terms = terms[:(oindex - 1)] + [newvalue] + terms[oindex + 2:]
         indexn = indexn + 2
         aoperator.remove(operator)
-    terms.remove("X")
     num = float(terms[0])
-    return(num)
+    return num
 
 
-
-'''
-if equation.lower() == "history" or "h":
-    adjustedHistory = history.reverse()
-    for i in range(min(len(history), settings["History"]["length"])):
-        if i <= len(history):
-            prev = adjustedHistory[i]
+while True:
+    equation = input("Enter what you want to solve: ")
+    if (equation.lower() == "history") or (equation.lower() == "h"):
+        print("")
+        history = open("history.json", "r")
+        try:
+            history = json.load(history)
+        except:
+            history = {
+            "history": []
+            }
+        history = history["history"]
+        for i in range(min(len(history), settings["History"]["length"])):
+            prev = history[i]
             "".join(prev)
             print(prev)
-else:
-'''
-while True:
-    equation = groupNum(input("Enter what you want to solve: "))
-    print(solve(equation))
+            print(solve(prev))
+            print("")
+    else:
+        equation = groupNum(equation)
+        print(solve(equation))
