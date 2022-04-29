@@ -3,6 +3,7 @@ import toml
 history = []
 settings = toml.load("settings.toml")
 operations = ["+", "-", "/", "*"]
+print(settings)
 
 def flip(num):
     return 1 / num
@@ -30,50 +31,57 @@ def groupNum(equ):
             num = float("".join(term))
             equationSimplified.append(num)
     history.append(equationSimplified)
-    print(equationSimplified)
     return equationSimplified
 
 def solve(equation):
-    " ".join(equation)
-    print(equation)
-    equation.split()
-    print(equation)
-    terms = equation.append("X")
-    print(terms)
+    terms = equation
+    terms.append("X")
     moperator = []
     aoperator = []
     for i in range(len(terms)):
         if (terms[i] == "*") or (terms[i] == "/"):
             moperator.append([i, terms[i]])
-        elif (terms[i] == "+") or (terms[i] == "-"):
-            aoperator.append([i, terms[i]])
-    print(moperator)
-    print(aoperator)
     indexn = 0
     while len(moperator) > 0:
         operator = moperator[0]
         oindex = operator[0] - indexn
         if operator[1] == "*":
             newvalue = terms[oindex - 1] * terms[oindex + 1]
-            print(newvalue)
         else:
             newvalue = terms[oindex - 1] / terms[oindex + 1]
-            print(newvalue)
         terms = terms[:(oindex - 1)] + [newvalue] + terms[oindex + 2:]
-        print(terms)
-
+        indexn = indexn + 2
         moperator.remove(operator)
-    return 0
+    for i in range(len(terms)):
+        if (terms[i] == "+") or (terms[i] == "-"):
+            aoperator.append([i, terms[i]])
+    indexn = 0
+    while len(aoperator) > 0:
+        operator = aoperator[0]
+        oindex = operator[0] - indexn
+        if operator[1] == "+":
+            newvalue = terms[oindex - 1] + terms[oindex + 1]
+        else:
+            newvalue = terms[oindex - 1] - terms[oindex + 1]
+        terms = terms[:(oindex - 1)] + [newvalue] + terms[oindex + 2:]
+        indexn = indexn + 2
+        aoperator.remove(operator)
+    terms.remove("X")
+    num = float(terms[0])
+    return(num)
 
-equation = groupNum(input("Enter what you want to solve: "))
+
+
 '''
 if equation.lower() == "history" or "h":
     adjustedHistory = history.reverse()
-    for i in range(min(len(history), 10)):
+    for i in range(min(len(history), settings["History"]["length"])):
         if i <= len(history):
             prev = adjustedHistory[i]
             "".join(prev)
             print(prev)
 else:
 '''
-print(solve(equation))
+while True:
+    equation = groupNum(input("Enter what you want to solve: "))
+    print(solve(equation))
