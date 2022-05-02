@@ -61,7 +61,13 @@ def groupNum(equ):
     return equationSimplified
 
 #simplifies and solves the equation
-def solve(equation):
+def solve(equation, isHistory):
+    if isHistory:
+        temp = []
+        for i in range(len(equation)):
+            temp.append(str(equation[i]))
+        temp = "".join(temp)
+        print(temp)
     terms = equation
     terms.append("X")
     moperator = []
@@ -111,14 +117,9 @@ while True:
             }
         history = history["history"]
         for i in range(min(len(history), settings["History"]["length"])):
-            prev = history[i]
-            temp = []
-            for i in range(len(prev)):
-                temp.append(str(prev[i]))
-            temp = "".join(temp)
-            print(temp)
-            print(solve(prev))
+            item = history[i]
+            print(solve(item, True))
             print("")
     else:
         equation = groupNum(equation)
-        print(solve(equation))
+        print(solve(equation, False))
