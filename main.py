@@ -3,7 +3,14 @@ Notes about the program:
     - Please note that this program code was made to work on python 3.10. Using it on previous versons of python or python 2 might cause numerous errors.
     - It also needs to have the toml module installed on pip. Tou can install this by typing "pip install toml" into the terminal.
     - This program is devided up into 3 files. main.py, settings.toml, and history,json. Not operating this without having these 3 files will cause errors.
-    - Make sure that you only type float numbers or operations into the inpur. typing any other characters except for "history" or "h" will cause errors.
+    - If the files don't exist, you can create them yourself.
+    - Make sure that you only type float numbers or operations into the input. typing any other characters except for "history" or "h" will cause errors.
+
+Instructions for setting up files:
+    - for history.json: create a new blank json file in the same directory as the main file. Label it "history.json" (caps matter)
+    - for settings.toml: create a new toml file in the same directory as the main file. Label it "settings.toml". You need fill it with this text:
+        [History]
+        length = 10
 """
 
 import math
