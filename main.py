@@ -1,11 +1,17 @@
+"""
+Notes about the program:
+    - Please note that this program code was made to work on python 3.10. Using it on previous versons of python or python 2 might cause numerous errors.
+    - It also needs to have the toml module installed on pip. Tou can install this by typing "pip install toml" into the terminal.
+    - This program is devided up into 3 files. main.py, settings.toml, and history,json. Not operating this without having these 3 files will cause errors.
+    - Make sure that you only type float numbers or operations into the inpur. typing any other characters except for "history" or "h" will cause errors.
+"""
+
 import math
 import toml
 import json
 settings = toml.load("settings.toml")
 operations = ["+", "-", "/", "*"]
 
-def flip(num):
-    return 1 / num
 
 def simplify(equation):
     a = equation.split()
@@ -13,6 +19,7 @@ def simplify(equation):
     c = list(b)
     return c
 
+#Adds an item to the history.toml file
 def updateHistory(item):
     history = open("history.json", "r")
     try:
@@ -26,6 +33,7 @@ def updateHistory(item):
     history["history"] = hisTemp
     hFile.write(json.dumps(history, indent=4))
 
+#groups all seperated numbers together while seperating operators in the list.
 def groupNum(equ):
     equation = simplify(equ)
     equationSimplified = []
@@ -45,6 +53,7 @@ def groupNum(equ):
     updateHistory(equationSimplified)
     return equationSimplified
 
+#simplifies and solves the equation
 def solve(equation):
     terms = equation
     terms.append("X")
@@ -81,7 +90,7 @@ def solve(equation):
     num = float(terms[0])
     return num
 
-
+#The main loop
 while True:
     equation = input("Enter what you want to solve: ")
     if (equation.lower() == "history") or (equation.lower() == "h"):
