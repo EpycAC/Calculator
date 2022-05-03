@@ -1,5 +1,7 @@
 """
 Notes about the program:
+    - This program can handle integers and floats. It cannot handle irrational numbers or imaginary numbers. To type a negative number, simply type 0 - the number.
+    - The program cannot also handle parenthesis.
     - Please note that this program code was made to work on python 3.10. Using it on previous versons of python or python 2 might cause numerous errors.
     - It also needs to have the toml module installed on pip. Tou can install this by typing "pip install toml" into the terminal.
     - This program is devided up into 3 files. main.py, settings.toml, and history,json. Not operating this without having these 3 files will cause errors.
